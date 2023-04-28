@@ -15,7 +15,9 @@ import com.thenexprojects.hiltexampleapplication.adapter.UsersAdapter
 import com.thenexprojects.hiltexampleapplication.data.MyRoomDatabase
 import com.thenexprojects.hiltexampleapplication.model.User
 import com.thenexprojects.hiltexampleapplication.viewmodel.UserViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UsersFragment : Fragment() {
     private val viewModel by viewModels<UserViewModel>{
         ViewModelProvider.AndroidViewModelFactory(requireActivity().application)
