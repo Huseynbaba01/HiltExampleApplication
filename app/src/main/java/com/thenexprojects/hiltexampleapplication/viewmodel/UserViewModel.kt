@@ -10,7 +10,7 @@ import com.thenexprojects.hiltexampleapplication.model.repo.UserRepositoryImpl
 import kotlinx.coroutines.launch
 
 class UserViewModel(application: Application): AndroidViewModel(application) {
-    private val userRepo = UserRepositoryImpl(MyRoomDatabase.getInstance((getApplication() as Application).applicationContext))
+    private val userRepo = UserRepositoryImpl(MyRoomDatabase.getInstance((getApplication() as Application).applicationContext).usersDao())
 
     fun getAllUsers(): LiveData<List<User>>{
         return userRepo.getAllUsers()
