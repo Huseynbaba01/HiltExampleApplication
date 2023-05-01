@@ -19,9 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class UsersFragment : Fragment() {
-    private val viewModel by viewModels<UserViewModel>{
-        ViewModelProvider.AndroidViewModelFactory(requireActivity().application)
-    }
+    private val viewModel by viewModels<UserViewModel>()
     private var adapter: UsersAdapter = UsersAdapter(emptyList())
 
     override fun onCreateView(
