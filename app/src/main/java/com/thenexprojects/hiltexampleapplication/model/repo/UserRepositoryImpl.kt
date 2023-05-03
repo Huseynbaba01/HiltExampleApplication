@@ -6,8 +6,9 @@ import com.thenexprojects.hiltexampleapplication.data.UsersDao
 import com.thenexprojects.hiltexampleapplication.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class UserRepositoryImpl(val usersDao: UsersDao): UserRepository {
+class UserRepositoryImpl @Inject constructor (val usersDao: UsersDao): UserRepository {
     override suspend fun addUser(user: User) {
         withContext(Dispatchers.IO){
             usersDao.insertUser(user)

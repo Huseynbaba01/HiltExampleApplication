@@ -1,25 +1,23 @@
 package com.thenexprojects.hiltexampleapplication.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.thenexprojects.hiltexampleapplication.R
 import com.thenexprojects.hiltexampleapplication.adapter.UsersAdapter
-import com.thenexprojects.hiltexampleapplication.data.MyRoomDatabase
 import com.thenexprojects.hiltexampleapplication.model.User
 import com.thenexprojects.hiltexampleapplication.viewmodel.UserViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UsersFragment : Fragment() {
-    private val viewModel by viewModels<UserViewModel>{
-        ViewModelProvider.AndroidViewModelFactory(requireActivity().application)
-    }
+    private val viewModel by viewModels<UserViewModel>()
     private var adapter: UsersAdapter = UsersAdapter(emptyList())
 
     override fun onCreateView(
@@ -33,12 +31,15 @@ class UsersFragment : Fragment() {
         items.layoutManager = LinearLayoutManager(requireContext())
         items.adapter = adapter
 
-        viewModel.getAllUsers().observe(viewLifecycleOwner){
+        viewModel.getAllUsers().observe(viewLifecycleOwner) {
             adapter.updateUsers(it)
         }
 
         addButton.setOnClickListener {
             viewModel.addUser(User(null, "ExampleUsername", "ExampleName", 1))
+            viewModel.getAllUsers().observe(viewLifecycleOwner) { newUsers ->
+                adapter.updateUsers(newUsers = newUsers)
+            }
         }
 
         return view
